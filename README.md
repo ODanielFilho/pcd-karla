@@ -50,6 +50,7 @@ Roles & permissions.
 - Owner (count as business)
 - Administrator
 - Candidate
+- Business
 - Anonymous
 
 ### Permissions table
@@ -66,7 +67,7 @@ Roles & permissions.
 | Update candidate role    | ✅            | ❌        | ❌       | ❌        |
 | Delete candidate         | ✅            | ⚠️         | ❌       | ❌        |
 | List projects            | ✅            | ✅        | ✅       | ❌        |
-| Create a new project     | ✅            | ✅        | ✅       | ❌        |
+| Create a new project     | ✅            | ❌        | ✅       | ❌        |
 | Update a project         | ✅            | ❌        | ✅       | ❌        |
 | Delete a project         | ✅            | ❌        | ✅       | ❌        |
 
@@ -78,4 +79,4 @@ Roles & permissions.
 
 - Only owners may transfer organization ownership;
 - Only administrators and project authors may update/delete the project;
-- Members can leave their own organization;
+- Candidates can leave their own apllies;
