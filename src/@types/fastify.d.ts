@@ -8,5 +8,6 @@ declare module 'fastify' {
     getUserInfo(): Promise<User>
     getCompanyJobs(userId: string): Promise<Job[]>
     getUserApplications(userId: string): Promise<Application[]>
+    getUserRole(): Promise<UserRole>
   }
 }

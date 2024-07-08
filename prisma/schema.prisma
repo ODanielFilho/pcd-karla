@@ -14,7 +14,6 @@ model User {
   passwordHash String?  @map("password_hash")
   avatarUrl    String?  @map("avatar_url")
   role         UserRole @default(CANDIDATE)
-  tokens       Token[]
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
@@ -31,7 +30,7 @@ model Job {
   companyId   String
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt @map("updated_at")
-
+  slug        String       @unique
   company     User         @relation("CompanyJobs", fields: [companyId], references: [id])
   applications Application[]
 
@@ -51,25 +50,8 @@ model Application {
   @@map("applications")
 }
 
-enum TokenType {
-  PASSWORD_RECOVER
-}
-
-model Token {
-  id        String    @id @default(uuid())
-  type      TokenType
-  createdAt DateTime  @default(now()) @map("created_at")
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @map("user_id")
-
-  @@map("tokens")
-}
-
 enum UserRole {
   ADMIN
   COMPANY
   CANDIDATE
 }
-
-

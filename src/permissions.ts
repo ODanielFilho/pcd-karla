@@ -20,8 +20,8 @@ export const permissions: Record<Role, PermissionsByRole> = {
     can('update', 'Job', { companyId: { $eq: user.id } })
     can('delete', 'Job', { companyId: { $eq: user.id } })
   },
-  CANDIDATE(_, { can }) {
-    can('manage', 'Application')
+  CANDIDATE(user, { can }) {
+    can('manage', 'Application', { userId: { $eq: user.id } })
     can('get', 'Job')
   },
 }

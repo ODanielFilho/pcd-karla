@@ -55,21 +55,21 @@ Roles & permissions.
 
 ### Permissions table
 
-|                          | Administrator | Candidate | Business | Anonymous |
-| ------------------------ | ------------- | ------    | -------  | --------- |
-| Create organization      | ✅            | ❌        | ✅       | ❌        |
-| Update organization      | ✅            | ❌        | ✅       | ❌        |
-| Delete organization      | ✅            | ❌        | ✅       | ❌        |
-| Invite a candidate       | ✅            | ❌        | ❌       | ❌        |
-| Revoke an invite         | ✅            | ❌        | ✅       | ❌        |
-| List Candidates          | ✅            | ✅        | ✅       | ❌        |
-| Transfer ownership       | ❌            | ❌        | ❌       | ❌        |
-| Update candidate role    | ✅            | ❌        | ❌       | ❌        |
-| Delete candidate         | ✅            | ⚠️         | ❌       | ❌        |
-| List projects            | ✅            | ✅        | ✅       | ❌        |
-| Create a new project     | ✅            | ❌        | ✅       | ❌        |
-| Update a project         | ✅            | ❌        | ✅       | ❌        |
-| Delete a project         | ✅            | ❌        | ✅       | ❌        |
+|                       | Administrator | Candidate | Business | Anonymous |
+| --------------------- | ------------- | --------- | -------- | --------- |
+| Create organization   | ✅            | ❌        | ✅       | ❌        |
+| Update organization   | ✅            | ❌        | ✅       | ❌        |
+| Delete organization   | ✅            | ❌        | ✅       | ❌        |
+| Invite a candidate    | ✅            | ❌        | ❌       | ❌        |
+| Revoke an invite      | ✅            | ❌        | ✅       | ❌        |
+| List Candidates       | ✅            | ✅        | ✅       | ❌        |
+| Transfer ownership    | ❌            | ❌        | ❌       | ❌        |
+| Update candidate role | ✅            | ❌        | ❌       | ❌        |
+| Delete candidate      | ✅            | ⚠️        | ❌       | ❌        |
+| List projects         | ✅            | ✅        | ✅       | ❌        |
+| Create a new project  | ✅            | ❌        | ✅       | ❌        |
+| Update a project      | ✅            | ❌        | ✅       | ❌        |
+| Delete a project      | ✅            | ❌        | ✅       | ❌        |
 
 > ✅ = allowed
 > ❌ = not allowed
