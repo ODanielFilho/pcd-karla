@@ -16,8 +16,10 @@ import { getProfile } from './routes/auth/get-profile'
 import { requestPasswordRecover } from './routes/auth/request-password-recover'
 import { resetPassword } from './routes/auth/reset-password'
 import { createJob } from './routes/jobs/create-job'
+import { deleteJob } from './routes/jobs/delete-job'
 import { getJob } from './routes/jobs/get-job'
 import { getJobs } from './routes/jobs/get-jobs'
+import { updateJob } from './routes/jobs/update-job'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 app.setSerializerCompiler(serializerCompiler)
@@ -64,6 +66,8 @@ app.register(resetPassword)
 app.register(createJob)
 app.register(getJob)
 app.register(getJobs)
+app.register(updateJob)
+app.register(deleteJob)
 
 app.listen({ port: 3000 }).then(() => {
   console.log('HTTP server runnig')

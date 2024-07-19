@@ -8,17 +8,18 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(uuid())
+  id           String    @id @default(uuid())
   name         String?
-  email        String   @unique
-  passwordHash String?  @map("password_hash")
-  avatarUrl    String?  @map("avatar_url")
-  role         UserRole @default(CANDIDATE)
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
+  email        String    @unique
+  passwordHash String?   @map("password_hash")
+  avatarUrl    String?   @map("avatar_url")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
 
-  jobs         Job[]    @relation("CompanyJobs")
+  role         UserRole  @default(CANDIDATE)
+  jobs         Job[]     @relation("CompanyJobs")
   applications Application[]
+  tokens       Token[]   @relation("UserTokens")
 
   @@map("users")
 }
@@ -54,4 +55,19 @@ enum UserRole {
   ADMIN
   COMPANY
   CANDIDATE
+}
+
+model Token {
+  id        String    @id @default(uuid())
+  type      TokenType
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade, name: "UserTokens")
+  userId    String    @map("user_id")
+
+  @@map("tokens")
+}
+
+enum TokenType {
+  PASSWORD_RECOVER
 }
