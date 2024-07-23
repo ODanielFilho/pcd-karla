@@ -6,8 +6,6 @@ import { getUserPermissions } from '../../../utils/get-user-permissions'
 import { auth } from '../../middlewares/auth'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
 
-
-
 export async function updateJob(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
@@ -35,7 +33,7 @@ export async function updateJob(app: FastifyInstance) {
               updatedAt: z.string().datetime(),
               companyId: z.string().uuid(),
             }),
-            404: z.object({ 
+            404: z.object({
               message: z.string(),
             }),
           },
@@ -62,9 +60,7 @@ export async function updateJob(app: FastifyInstance) {
         }
 
         if (job.companyId !== userId && userRole !== 'ADMIN') {
-          throw new UnauthorizedError(
-            `You're not allowed to update this job.`,
-          )
+          throw new UnauthorizedError(`You're not allowed to update this job.`)
         }
 
         const updatedJob = await prisma.job.update({

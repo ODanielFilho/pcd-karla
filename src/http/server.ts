@@ -10,6 +10,7 @@ import {
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { errorHandler } from './error-handler'
+import { createApplication } from './routes/applications/create-application'
 import { authenticateWithPassword } from './routes/auth/authenticate-with-password'
 import { createAccount } from './routes/auth/create-account'
 import { getProfile } from './routes/auth/get-profile'
@@ -68,6 +69,8 @@ app.register(getJob)
 app.register(getJobs)
 app.register(updateJob)
 app.register(deleteJob)
+
+app.register(createApplication)
 
 app.listen({ port: 3000 }).then(() => {
   console.log('HTTP server runnig')

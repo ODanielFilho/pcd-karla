@@ -7,4 +7,4 @@ export const applicationSubject = z.tuple([
   z.union([z.literal('Application'), applicationSchema]),
 ])
 
-export type ApplicationSubject = z.infer<typeof applicationSchema>
+export type ApplicationSubject = z.infer<typeof applicationSubject>

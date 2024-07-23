@@ -7,13 +7,12 @@ import { auth } from '../../middlewares/auth'
 import { BadRequestError } from '../_errors/bad-request-error'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
 
-
 export async function deleteJob(app: FastifyInstance) {
-    app
+  app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .delete(
-        '/jobs/:jobId',
+      '/jobs/:jobId',
       {
         schema: {
           tags: ['Jobs'],
@@ -27,7 +26,7 @@ export async function deleteJob(app: FastifyInstance) {
           },
         },
       },
-        async (request, reply) => {
+      async (request, reply) => {
         const { jobId } = request.params
         const userId = await request.getCurrentUserId()
         const userRole = await request.getUserRole()
