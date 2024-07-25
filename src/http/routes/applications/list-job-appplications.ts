@@ -24,13 +24,6 @@ export async function listJobApplications(app: FastifyInstance) {
             200: z.object({
               applications: z.array(
                 z.object({
-                  id: z.string().uuid(),
-                  userId: z.string(),
-                  createdAt: z.date(),
-                  job: z.object({
-                    title: z.string(),
-                    description: z.string(),
-                  }),
                   user: z.object({
                     name: z.string().nullable(),
                     email: z.string(),
@@ -78,15 +71,6 @@ export async function listJobApplications(app: FastifyInstance) {
             jobId: jobId,
           },
           select: {
-            id: true,
-            userId: true,
-            createdAt: true,
-            job: {
-              select: {
-                title: true,
-                description: true,
-              },
-            },
             user: {
               select: {
                 name: true,

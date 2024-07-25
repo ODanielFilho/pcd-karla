@@ -14,8 +14,6 @@
 - [ ] It should be able to create a new organization;
 - [ ] It should be able to get organizations to which the user belongs;
 - [ ] It should be able to update an organization;
-- [ ] It should be able to shutdown an organization;
-- [ ] It should be able to transfer organization ownership;
 
 ### Projects
 
@@ -45,9 +43,8 @@ Roles & permissions.
 | Delete organization   | ✅            | ❌        | ✅       | ❌        |
 | Revoke an invite      | ✅            | ❌        | ✅       | ❌        |
 | List Candidates       | ✅            | ❌        | ✅       | ❌        |
-| Transfer ownership    | ❌            | ❌        | ❌       | ❌        |
-| Update candidate role | ✅            | ❌        | ❌       | ❌        |
-| Delete candidate      | ✅            | ⚠️        | ❌       | ❌        |
+| Update user role      | ✅            | ❌        | ❌       | ❌        |
+| Delete candidate      | ✅            | ⚠️         | ❌       | ❌        |
 | List projects         | ❌            | ✅        | ❌       | ❌        |
 | Create Applications   | ❌            | ✅        | ❌       | ❌        |
 | Get Applications      | ❌            | ✅        | ❌       | ❌        |
