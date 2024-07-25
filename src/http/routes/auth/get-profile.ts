@@ -8,14 +8,14 @@ import { BadRequestError } from '../_errors/bad-request-error'
 export async function getProfile(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
-    .register(auth)
+    .register(auth) // Adiciona o middleware de autenticação
     .get(
       '/profile',
       {
         schema: {
           tags: ['Auth'],
           summary: 'Get authenticated user profile',
-          security: [{ bearerAuth: [] }],
+          security: [{ bearerAuth: [] }], // Indica que a rota requer um token Bearer
           response: {
             200: z.object({
               user: z.object({
@@ -30,7 +30,6 @@ export async function getProfile(app: FastifyInstance) {
       },
       async (request, reply) => {
         const userId = await request.getCurrentUserId()
-
         const user = await prisma.user.findUnique({
           select: {
             id: true,
