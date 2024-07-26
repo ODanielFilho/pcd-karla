@@ -50,7 +50,6 @@ export async function authenticateWithPassword(app: FastifyInstance) {
       if (!isPasswordValid) {
         throw new BadRequestError('Invalid credentials.')
       }
-
       const token = await reply.jwtSign(
         {
           sub: userFromEmail.id,
