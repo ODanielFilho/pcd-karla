@@ -8,31 +8,31 @@ datasource db {
 }
 
 model User {
-  id           String    @id @default(uuid())
+  id           String   @id @default(uuid())
   name         String?
-  email        String    @unique
-  passwordHash String?   @map("password_hash")
-  avatarUrl    String?   @map("avatar_url")
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at")
+  email        String   @unique
+  passwordHash String?  @map("password_hash")
+  avatarUrl    String?  @map("avatar_url")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
 
-  role         UserRole  @default(CANDIDATE)
-  jobs         Job[]     @relation("CompanyJobs")
+  role         UserRole      @default(CANDIDATE)
+  jobs         Job[]         @relation("CompanyJobs")
   applications Application[]
-  tokens       Token[]   @relation("UserTokens")
+  tokens       Token[]       @relation("UserTokens")
 
   @@map("users")
 }
 
 model Job {
-  id          String       @id @default(uuid())
-  title       String
-  description String
-  companyId   String
-  createdAt   DateTime     @default(now()) @map("created_at")
-  updatedAt   DateTime     @updatedAt @map("updated_at")
-  slug        String       @unique
-  company     User         @relation("CompanyJobs", fields: [companyId], references: [id])
+  id           String        @id @default(uuid())
+  title        String
+  description  String
+  companyId    String
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  slug         String        @unique
+  company      User          @relation("CompanyJobs", fields: [companyId], references: [id])
   applications Application[]
 
   @@map("jobs")
@@ -45,8 +45,8 @@ model Application {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user      User     @relation(fields: [userId], references: [id])
-  job       Job      @relation(fields: [jobId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+  job  Job  @relation(fields: [jobId], references: [id])
 
   @@map("applications")
 }
@@ -62,8 +62,8 @@ model Token {
   type      TokenType
   createdAt DateTime  @default(now()) @map("created_at")
 
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade, name: "UserTokens")
-  userId    String    @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, name: "UserTokens")
+  userId String @map("user_id")
 
   @@map("tokens")
 }

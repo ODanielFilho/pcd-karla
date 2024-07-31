@@ -78,6 +78,6 @@ app.register(deleteApplication)
 app.register(listUserApplications)
 app.register(listJobApplications)
 
-app.listen({ port: 3000 }).then(() => {
-  console.log('HTTP server runnig')
+app.listen({ port: 3000, host: '0.0.0.0' }).then(() => {
+  console.log('HTTP server running on port 3000')
 })
