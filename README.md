@@ -36,22 +36,22 @@ Roles & permissions.
 
 ### Permissions table
 
-|                       | Administrator | Candidate | Business | Anonymous |
-| --------------------- | ------------- | --------- | -------- | --------- |
-| Create organization   | ✅            | ❌        | ✅       | ❌        |
-| Update organization   | ✅            | ❌        | ✅       | ❌        |
-| Delete organization   | ✅            | ❌        | ✅       | ❌        |
-| Revoke an invite      | ✅            | ❌        | ✅       | ❌        |
-| List Candidates       | ✅            | ❌        | ✅       | ❌        |
-| Update user role      | ✅            | ❌        | ❌       | ❌        |
-| Delete candidate      | ✅            | ⚠️         | ❌       | ❌        |
-| List projects         | ❌            | ✅        | ❌       | ❌        |
-| Create Applications   | ❌            | ✅        | ❌       | ❌        |
-| Get Applications      | ❌            | ✅        | ❌       | ❌        |
-| Delete Applications   | ❌            | ✅        | ❌       | ❌        |
-| Create a new project  | ✅            | ❌        | ✅       | ❌        |
-| Update a project      | ✅            | ❌        | ✅       | ❌        |
-| Delete a project      | ✅            | ❌        | ✅       | ❌        |
+|                      | Administrator | Candidate | Business | Anonymous |
+| -------------------- | ------------- | --------- | -------- | --------- |
+| Create organization  | ✅            | ❌        | ✅       | ❌        |
+| Update organization  | ✅            | ❌        | ✅       | ❌        |
+| Delete organization  | ✅            | ❌        | ✅       | ❌        |
+| Revoke an invite     | ✅            | ❌        | ✅       | ❌        |
+| List Candidates      | ✅            | ❌        | ✅       | ❌        |
+| Update user role     | ✅            | ❌        | ❌       | ❌        |
+| Delete candidate     | ✅            | ⚠️        | ❌       | ❌        |
+| List projects        | ❌            | ✅        | ❌       | ❌        |
+| Create Applications  | ❌            | ✅        | ❌       | ❌        |
+| Get Applications     | ❌            | ✅        | ❌       | ❌        |
+| Delete Applications  | ❌            | ✅        | ❌       | ❌        |
+| Create a new project | ✅            | ❌        | ✅       | ❌        |
+| Update a project     | ✅            | ❌        | ✅       | ❌        |
+| Delete a project     | ✅            | ❌        | ✅       | ❌        |
 
 > ✅ = allowed
 > ❌ = not allowed
