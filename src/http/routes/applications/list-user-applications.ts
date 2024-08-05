@@ -18,12 +18,12 @@ export async function listUserApplications(app: FastifyInstance) {
           security: [{ bearerAuth: [] }],
           response: {
             200: z.object({
-              applications: z.array(
+              jobsByApplication: z.array(
                 z.object({
-                  id: z.string().uuid(),
-                  jobId: z.string(),
-                  userId: z.string(),
-                  createdAt: z.date(),
+                  id: z.string(),
+                  title: z.string(),
+                  description: z.string(),
+                  company: z.string(),
                 }),
               ),
             }),
@@ -53,8 +53,24 @@ export async function listUserApplications(app: FastifyInstance) {
           },
         })
 
+        const jobsByApplication = await prisma.job.findMany({
+          where: {
+            id: { in: applications.map((application) => application.jobId) },
+          },
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            company: true,
+          },
+        })
         // Retorna as aplicações encontradas
-        return reply.send({ applications })
+        return reply.send({
+          jobsByApplication: jobsByApplication.map((job) => ({
+            ...job,
+            company: job.company.id,
+          })),
+        })
       },
     )
 }
