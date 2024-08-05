@@ -20,6 +20,7 @@ model User {
   jobs         Job[]         @relation("CompanyJobs")
   applications Application[]
   tokens       Token[]       @relation("UserTokens")
+  News         News[]
 
   @@map("users")
 }
@@ -55,6 +56,7 @@ enum UserRole {
   ADMIN
   COMPANY
   CANDIDATE
+  MEDIA
 }
 
 model Token {
@@ -70,4 +72,17 @@ model Token {
 
 enum TokenType {
   PASSWORD_RECOVER
+}
+
+model News {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  imageUrl    String?
+  publisherId String
+  publisher   User     @relation(fields: [publisherId], references: [id])
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("news")
 }

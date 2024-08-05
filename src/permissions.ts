@@ -26,4 +26,10 @@ export const permissions: Record<Role, PermissionsByRole> = {
     can('manage', 'Application', { userId: { $eq: user.id } })
     can('get', 'Job')
   },
+  MEDIA(user, { can }) {
+    can('create', 'News')
+    can('get', 'News')
+    can('update', 'News')
+    can('delete', 'News')
+  },
 }

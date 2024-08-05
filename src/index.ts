@@ -10,6 +10,7 @@ import { User } from './models/user'
 import { permissions } from './permissions'
 import { applicationSubject } from './subjects/application'
 import { jobSubject } from './subjects/job'
+import { newsSubject } from './subjects/news'
 import { userSubject } from './subjects/user'
 
 export * from './models/user'
@@ -19,6 +20,7 @@ const appAbilitiesSchema = z.union([
   jobSubject,
   userSubject,
   applicationSubject,
+  newsSubject,
   z.tuple([z.literal('manage'), z.literal('all')]),
 ])
 
