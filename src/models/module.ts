@@ -3,7 +3,7 @@ import z from 'zod'
 export const moduleSchema = z.object({
   id: z.bigint(),
   title: z.string(),
-  teazherId: z.string(),
+  teacherId: z.string(),
   trainningId: z.bigint(),
   createdAt: z.date(),
   updatedAt: z.date(),

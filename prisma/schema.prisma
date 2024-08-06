@@ -128,8 +128,10 @@ model Module {
   trainningId Int
   teacher     User      @relation(fields: [teacherId], references: [id])
   teacherId   String    @map("teacher_id")
-  trainning   Trainning @relation(fields: [trainningId], references: [id])
+  trainning   Trainning @relation(fields: [trainningId], references: [id], onDelete: Cascade)
   lessons     Lesson[]
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 
   @@map("modules")
 }
@@ -139,12 +141,14 @@ model Lesson {
   title       String
   link        String
   description String
-  teacher     User      @relation(fields: [teacherId], references: [id])
   teacherId   String    @map("teacher_id")
   trainningId Int
-  trainning   Trainning @relation(fields: [trainningId], references: [id])
   moduleId    Int       @map("module_id")
-  module      Module    @relation(fields: [moduleId], references: [id])
+  trainning   Trainning @relation(fields: [trainningId], references: [id])
+  teacher     User      @relation(fields: [teacherId], references: [id])
+  module      Module    @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 
   @@map("lessons")
 }
@@ -155,7 +159,7 @@ model Classroom {
   trainningId Int
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
-  user        User      @relation(fields: [studentId], references: [id])
+  student     User      @relation(fields: [studentId], references: [id])
   trainning   Trainning @relation(fields: [trainningId], references: [id], onDelete: Cascade)
 
   @@map("classrooms")
