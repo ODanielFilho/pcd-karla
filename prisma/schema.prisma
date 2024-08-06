@@ -97,7 +97,7 @@ model Trainning {
   title          String
   imageUrl       String?
   format         String
-  duraction      String
+  duration       String
   timeconclusion String
   intended       String
   certificate    String

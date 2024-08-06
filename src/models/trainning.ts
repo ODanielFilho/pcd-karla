@@ -1,14 +1,14 @@
 import z from 'zod'
 
 export const trainningSchema = z.object({
-  id: z.bigint(),
+  id: z.number(),
   imageUrl: z.string().optional(),
   format: z.string(),
-  duraction: z.string(),
+  duration: z.string(),
   timeconclusion: z.string(),
   intended: z.string(),
   certificate: z.string(),
-  location: z.string(),
+  location: z.string().optional(),
   date: z.date(),
   teacherLink: z.string(),
   objective: z.string(),
