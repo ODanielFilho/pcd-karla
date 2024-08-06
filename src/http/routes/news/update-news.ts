@@ -14,7 +14,7 @@ export async function updateNews(app: FastifyInstance) {
       '/news/:newsId',
       {
         schema: {
-          tags: ['  News'],
+          tags: ['News'],
           summary: 'Update a news',
           security: [{ bearerAuth: [] }],
           params: z.object({
