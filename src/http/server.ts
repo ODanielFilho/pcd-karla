@@ -31,7 +31,10 @@ import { getNews } from './routes/news/get-news'
 import { getNewsByPublishers } from './routes/news/get-news-by-publishers'
 import { updateNews } from './routes/news/update-news'
 import { createTrainning } from './routes/trainnings/create-trainning'
+import { getAllTrainnings } from './routes/trainnings/get all-trainnings'
 import { getTrainning } from './routes/trainnings/get-trainning'
+import { getTrainnings } from './routes/trainnings/get-trainnings'
+import { updateTrainning } from './routes/trainnings/update-trainning'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 app.setSerializerCompiler(serializerCompiler)
@@ -95,6 +98,9 @@ app.register(updateNews)
 
 app.register(createTrainning)
 app.register(getTrainning)
+app.register(getTrainnings)
+app.register(getAllTrainnings)
+app.register(updateTrainning)
 
 app.listen({ port: 3001, host: '0.0.0.0' }).then(() => {
   console.log('HTTP server running on port 3001')
