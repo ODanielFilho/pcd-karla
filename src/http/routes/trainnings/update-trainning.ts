@@ -16,7 +16,7 @@ export async function updateTrainning(app: FastifyInstance) {
       {
         schema: {
           tags: ['Trainnings'],
-          summary: 'Create a new trainning',
+          summary: 'Update a trainning',
           security: [{ bearerAuth: [] }],
           params: z.object({
             trainningId: z.number(),
@@ -76,12 +76,14 @@ export async function updateTrainning(app: FastifyInstance) {
         if (cannot('update', 'Trainning')) {
           // eslint-disable-next-line quotes
           throw new UnauthorizedError(
-            "You're not allowed to update new trainnings.",
+            "You're not allowed to update this trainning.",
           )
         }
 
         if (trainning?.teacherId !== userId) {
-          throw new UnauthorizedError(`You're not allowed to update this news.`)
+          throw new UnauthorizedError(
+            `You're not allowed to update this trainning.`,
+          )
         }
 
         const {

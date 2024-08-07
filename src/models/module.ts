@@ -1,10 +1,10 @@
 import z from 'zod'
 
 export const moduleSchema = z.object({
-  id: z.bigint(),
+  id: z.number(),
   title: z.string(),
   teacherId: z.string(),
-  trainningId: z.bigint(),
+  trainningId: z.number(),
   createdAt: z.date(),
   updatedAt: z.date(),
   __typename: z.literal('Module'),

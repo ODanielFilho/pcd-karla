@@ -144,7 +144,7 @@ model Lesson {
   teacherId   String    @map("teacher_id")
   trainningId Int
   moduleId    Int       @map("module_id")
-  trainning   Trainning @relation(fields: [trainningId], references: [id])
+  trainning   Trainning @relation(fields: [trainningId], references: [id], onDelete: Cascade)
   teacher     User      @relation(fields: [teacherId], references: [id])
   module      Module    @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   createdAt   DateTime  @default(now()) @map("created_at")

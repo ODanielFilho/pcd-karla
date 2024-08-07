@@ -30,7 +30,13 @@ import { getAllNews } from './routes/news/get-all-news'
 import { getNews } from './routes/news/get-news'
 import { getNewsByPublishers } from './routes/news/get-news-by-publishers'
 import { updateNews } from './routes/news/update-news'
+import { createModule } from './routes/trainning-modules/create-module'
+import { deleteModule } from './routes/trainning-modules/delete-module'
+import { getModule } from './routes/trainning-modules/get-module'
+import { getModules } from './routes/trainning-modules/get-modules'
+import { updateModule } from './routes/trainning-modules/update-module'
 import { createTrainning } from './routes/trainnings/create-trainning'
+import { deleteTrainning } from './routes/trainnings/delete-trainning'
 import { getAllTrainnings } from './routes/trainnings/get all-trainnings'
 import { getTrainning } from './routes/trainnings/get-trainning'
 import { getTrainnings } from './routes/trainnings/get-trainnings'
@@ -101,6 +107,13 @@ app.register(getTrainning)
 app.register(getTrainnings)
 app.register(getAllTrainnings)
 app.register(updateTrainning)
+app.register(deleteTrainning)
+
+app.register(createModule)
+app.register(getModules)
+app.register(getModule)
+app.register(updateModule)
+app.register(deleteModule)
 
 app.listen({ port: 3001, host: '0.0.0.0' }).then(() => {
   console.log('HTTP server running on port 3001')
