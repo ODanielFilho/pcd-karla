@@ -6,6 +6,7 @@ export const classroomSubject = z.tuple([
   z.union([
     z.literal('manage'),
     z.literal('update'),
+    z.literal('create'),
     z.literal('read'),
     z.literal('delete'),
   ]),

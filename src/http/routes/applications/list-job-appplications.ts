@@ -41,21 +41,18 @@ export async function listJobApplications(app: FastifyInstance) {
         // Obtém as permissões do usuário
         const { cannot } = getUserPermissions(userId, userRole)
 
-        // Verifica se o usuário pode ver as aplicações para o emprego especificado
         if (cannot('read', 'Application')) {
           throw new UnauthorizedError(
             'You are not authorized to view these applications.',
           )
         }
 
-        // Obtém o ID do emprego a partir dos parâmetros de rota
         const { jobId } = request.params
 
-        // Verifica se o emprego pertence à empresa do usuário autenticado
         const job = await prisma.job.findUnique({
           where: {
             id: jobId,
-            companyId: userId, // Verifica se o job pertence ao usuário autenticado
+            companyId: userId,
           },
         })
 

@@ -3,7 +3,7 @@ import z from 'zod'
 export const lessonSchema = z.object({
   id: z.bigint(),
   title: z.string(),
-  link: z.string(),
+  link: z.string().url(),
   description: z.string(),
   teacherId: z.string(),
   trainningId: z.bigint(),

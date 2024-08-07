@@ -19,11 +19,20 @@ import { createAccount } from './routes/auth/create-account'
 import { getProfile } from './routes/auth/get-profile'
 import { requestPasswordRecover } from './routes/auth/request-password-recover'
 import { resetPassword } from './routes/auth/reset-password'
+import { createClassroom } from './routes/classrooms/create-classroom'
+import { getTrainningStudents } from './routes/classrooms/get-trainning-classrooms'
+import { getUserTrainings } from './routes/classrooms/get-user-trainnings'
 import { createJob } from './routes/jobs/create-job'
 import { deleteJob } from './routes/jobs/delete-job'
 import { getJob } from './routes/jobs/get-job'
 import { getJobs } from './routes/jobs/get-jobs'
 import { updateJob } from './routes/jobs/update-job'
+import { createLesson } from './routes/lessons/create-lesson'
+import { deleteLesson } from './routes/lessons/delete-lesson'
+import { getLesson } from './routes/lessons/get-lesson'
+import { getModuleLessons } from './routes/lessons/get-module-lessons'
+import { getTrainningLessons } from './routes/lessons/get-trainning-lessons'
+import { updateLesson } from './routes/lessons/update-lesson'
 import { createNews } from './routes/news/create-news'
 import { deleteNews } from './routes/news/delete-news'
 import { getAllNews } from './routes/news/get-all-news'
@@ -114,6 +123,17 @@ app.register(getModules)
 app.register(getModule)
 app.register(updateModule)
 app.register(deleteModule)
+
+app.register(createLesson)
+app.register(getLesson)
+app.register(getModuleLessons)
+app.register(getTrainningLessons)
+app.register(updateLesson)
+app.register(deleteLesson)
+
+app.register(createClassroom)
+app.register(getTrainningStudents)
+app.register(getUserTrainings)
 
 app.listen({ port: 3001, host: '0.0.0.0' }).then(() => {
   console.log('HTTP server running on port 3001')

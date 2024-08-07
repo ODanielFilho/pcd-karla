@@ -14,6 +14,9 @@ export const permissions: Record<Role, PermissionsByRole> = {
   ADMIN(user, { can }) {
     can('manage', 'all')
     can('manage', 'Trainning')
+    can('manage', 'Module')
+    can('manage', 'Lesson')
+    can('manage', 'Classroom')
   },
   COMPANY(user, { can }) {
     can('create', 'Job')
