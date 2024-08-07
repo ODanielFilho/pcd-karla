@@ -16,11 +16,16 @@ model User {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
-  role         UserRole      @default(CANDIDATE)
-  jobs         Job[]         @relation("CompanyJobs")
-  applications Application[]
-  tokens       Token[]       @relation("UserTokens")
-  News         News[]
+  role              UserRole      @default(CANDIDATE)
+  jobs              Job[]         @relation("CompanyJobs")
+  applications      Application[]
+  tokens            Token[]       @relation("UserTokens")
+  News              News[]
+  Trainning         Trainning[]
+  TrainningStudents Trainning[]   @relation("TrainningStudents")
+  Classroom         Classroom[]
+  Lesson            Lesson[]
+  Module            Module[]
 
   @@map("users")
 }
@@ -85,4 +90,77 @@ model News {
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   @@map("news")
+}
+
+model Trainning {
+  id             Int         @id @default(autoincrement())
+  title          String
+  imageUrl       String?
+  format         String
+  duration       String
+  timeconclusion String
+  intended       String
+  certificate    String
+  location       String
+  date           DateTime
+  teacherLink    String
+  objective      String
+  about          String
+  aboutHeader    String?
+  trail          String[]
+  like           Boolean?
+  content        String
+  students       User[]      @relation("TrainningStudents")
+  teacher        User        @relation(fields: [teacherId], references: [id])
+  teacherId      String      @map("teacher_id")
+  createdAt      DateTime    @default(now()) @map("created_at")
+  updatedAt      DateTime    @updatedAt @map("updated_at")
+  Module         Module[]
+  lessons        Lesson[]
+  Classroom      Classroom[]
+
+  @@map("trainnings")
+}
+
+model Module {
+  id          Int       @id @default(autoincrement())
+  title       String
+  trainningId Int
+  teacher     User      @relation(fields: [teacherId], references: [id])
+  teacherId   String    @map("teacher_id")
+  trainning   Trainning @relation(fields: [trainningId], references: [id], onDelete: Cascade)
+  lessons     Lesson[]
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@map("modules")
+}
+
+model Lesson {
+  id          Int       @id @default(autoincrement())
+  title       String
+  link        String
+  description String
+  teacherId   String    @map("teacher_id")
+  trainningId Int
+  moduleId    Int       @map("module_id")
+  trainning   Trainning @relation(fields: [trainningId], references: [id], onDelete: Cascade)
+  teacher     User      @relation(fields: [teacherId], references: [id])
+  module      Module    @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@map("lessons")
+}
+
+model Classroom {
+  id          Int       @id @default(autoincrement())
+  studentId   String
+  trainningId Int
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  student     User      @relation(fields: [studentId], references: [id])
+  trainning   Trainning @relation(fields: [trainningId], references: [id], onDelete: Cascade)
+
+  @@map("classrooms")
 }

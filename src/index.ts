@@ -9,8 +9,12 @@ import { z } from 'zod'
 import { User } from './models/user'
 import { permissions } from './permissions'
 import { applicationSubject } from './subjects/application'
+import { classroomSubject } from './subjects/classroom'
 import { jobSubject } from './subjects/job'
+import { lessonSubject } from './subjects/lesson'
+import { moduleSubject } from './subjects/module'
 import { newsSubject } from './subjects/news'
+import { trainningSubject } from './subjects/trainning'
 import { userSubject } from './subjects/user'
 
 export * from './models/user'
@@ -21,6 +25,10 @@ const appAbilitiesSchema = z.union([
   userSubject,
   applicationSubject,
   newsSubject,
+  trainningSubject,
+  moduleSubject,
+  lessonSubject,
+  classroomSubject,
   z.tuple([z.literal('manage'), z.literal('all')]),
 ])
 

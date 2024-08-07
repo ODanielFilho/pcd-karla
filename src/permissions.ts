@@ -13,6 +13,10 @@ type PermissionsByRole = (
 export const permissions: Record<Role, PermissionsByRole> = {
   ADMIN(user, { can }) {
     can('manage', 'all')
+    can('manage', 'Trainning')
+    can('manage', 'Module')
+    can('manage', 'Lesson')
+    can('manage', 'Classroom')
   },
   COMPANY(user, { can }) {
     can('create', 'Job')
@@ -21,9 +25,12 @@ export const permissions: Record<Role, PermissionsByRole> = {
     can('delete', 'Job', { companyId: { $eq: user.id } })
     can('read', 'Application', { jobId: { $in: user.companyJobIds } })
     can('delete', 'Application', { jobId: { $in: user.companyJobIds } })
+    can('manage', 'Trainning', { teacherId: { $eq: user.id } })
+    can('get', 'Trainning')
   },
   CANDIDATE(user, { can }) {
     can('manage', 'Application', { userId: { $eq: user.id } })
+    can('get', 'Trainning')
     can('get', 'Job')
   },
   MEDIA(user, { can }) {
