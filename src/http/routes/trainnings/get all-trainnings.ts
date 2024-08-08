@@ -2,21 +2,17 @@ import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { prisma } from '../../../lib/prisma'
-import { getUserPermissions } from '../../../utils/get-user-permissions'
-import { auth } from '../../middlewares/auth'
-import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function getAllTrainnings(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
-    .register(auth)
+    // {{ edit_1 }} Removido o middleware de autenticação
     .get(
       '/trainnings',
       {
         schema: {
           tags: ['Trainnings'],
           summary: 'Get all trainnings',
-          security: [{ bearerAuth: [] }],
           response: {
             200: z.object({
               trainnings: z.array(
@@ -45,17 +41,6 @@ export async function getAllTrainnings(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        const userId = await request.getCurrentUserId()
-        const userRole = await request.getUserRole()
-
-        const { cannot } = getUserPermissions(userId, userRole)
-
-        if (cannot('get', 'Trainning')) {
-          throw new UnauthorizedError(
-            'You are not allowed to see the trainnings.',
-          )
-        }
-
         const trainnings = await prisma.trainning.findMany()
 
         const formattedTrainnings = trainnings.map((trainning) => ({
