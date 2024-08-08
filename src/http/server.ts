@@ -20,6 +20,7 @@ import { getProfile } from './routes/auth/get-profile'
 import { requestPasswordRecover } from './routes/auth/request-password-recover'
 import { resetPassword } from './routes/auth/reset-password'
 import { createClassroom } from './routes/classrooms/create-classroom'
+import { deleteClassroom } from './routes/classrooms/delete-classroom'
 import { getTrainningStudents } from './routes/classrooms/get-trainning-classrooms'
 import { getUserTrainings } from './routes/classrooms/get-user-trainnings'
 import { createJob } from './routes/jobs/create-job'
@@ -134,6 +135,7 @@ app.register(deleteLesson)
 app.register(createClassroom)
 app.register(getTrainningStudents)
 app.register(getUserTrainings)
+app.register(deleteClassroom)
 
 app.listen({ port: 3001, host: '0.0.0.0' }).then(() => {
   console.log('HTTP server running on port 3001')
