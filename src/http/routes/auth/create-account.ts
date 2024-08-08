@@ -3,6 +3,7 @@ import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { prisma } from '../../../lib/prisma'
+import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function createAccount(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -15,15 +16,12 @@ export async function createAccount(app: FastifyInstance) {
           name: z.string(),
           email: z.string().email(),
           password: z.string().min(6),
-          role: z
-            .enum(['ADMIN', 'COMPANY', 'CANDIDATE', 'MEDIA'])
-            .default('CANDIDATE')
-            .optional(),
+          role: z.enum(['ADMIN', 'COMPANY', 'CANDIDATE', 'MEDIA']).optional(), // {{ edit_1 }} Tornar a role opcional
         }),
       },
     },
     async (request, reply) => {
-      const { name, email, password, role } = request.body
+      const { name, email, password, role = 'CANDIDATE' } = request.body // {{ edit_2 }} Atribuição padrão da role
 
       const userWithSameEmail = await prisma.user.findUnique({
         where: {
@@ -32,9 +30,7 @@ export async function createAccount(app: FastifyInstance) {
       })
 
       if (userWithSameEmail) {
-        return reply
-          .status(400)
-          .send({ message: 'User with same e-mail already exists.' })
+        throw new BadRequestError('User with same e-mail already exists.')
       }
 
       const passwordHash = await hash(password, 6)
