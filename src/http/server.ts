@@ -53,6 +53,9 @@ import { getTrainnings } from './routes/trainnings/get-trainnings'
 import { updateTrainning } from './routes/trainnings/update-trainning'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
+
+const port = process.env.PORT
+
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
 
@@ -82,9 +85,8 @@ app.register(fastifySwagger, {
 app.register(fastifySwaggerUI, {
   routePrefix: '/docs',
 })
-
 app.register(fastifyJwt, {
-  secret: 'your_jwt_secret_here', // Substitua pelo seu segredo JWT
+  secret: process.env.JWT_SECRET as string,
 })
 app.register(fastifyCors)
 
@@ -137,6 +139,6 @@ app.register(getTrainningStudents)
 app.register(getUserTrainings)
 app.register(deleteClassroom)
 
-app.listen({ port: 3001, host: '0.0.0.0' }).then(() => {
-  console.log('HTTP server running on port 3001')
+app.listen({ port: Number(port), host: '0.0.0.0' }).then(() => {
+  console.log(`HTTP server running on port ${port}`)
 })
