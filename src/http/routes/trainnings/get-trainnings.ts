@@ -26,7 +26,7 @@ export async function getTrainnings(app: FastifyInstance) {
                 z.object({
                   id: z.number(),
                   title: z.string(),
-                  imageUrl: z.string().url().optional(),
+                  image: z.string().url().optional(),
                   format: z.enum(['ONLINE', 'IN_PERSON', 'HYBRID']),
                   duration: z.string(),
                   timeconclusion: z.string(),
@@ -64,6 +64,7 @@ export async function getTrainnings(app: FastifyInstance) {
             id: true,
             title: true,
             format: true,
+            image: true,
             duration: true,
             timeconclusion: true,
             intended: true,
@@ -90,7 +91,12 @@ export async function getTrainnings(app: FastifyInstance) {
           format: trainning.format as 'ONLINE' | 'IN_PERSON' | 'HYBRID',
         }))
 
-        return reply.send({ trainnings: formattedTrainnings })
+        return reply.send({
+          trainnings: formattedTrainnings.map((trainning) => ({
+            ...trainning,
+            image: trainning.image || undefined,
+          })),
+        })
       },
     )
 }

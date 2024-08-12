@@ -118,7 +118,7 @@ model News {
 model Trainning {
   id             Int         @id @default(autoincrement())
   title          String
-  imageUrl       String?
+  image          String?
   format         String
   duration       String
   timeconclusion String

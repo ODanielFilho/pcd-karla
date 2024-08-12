@@ -19,7 +19,7 @@ export async function getAllTrainnings(app: FastifyInstance) {
                 z.object({
                   id: z.number(),
                   title: z.string(),
-                  imageUrl: z.string().url().optional(),
+                  image: z.string().url().optional(),
                   format: z.enum(['ONLINE', 'IN_PERSON', 'HYBRID']),
                   duration: z.string(),
                   timeconclusion: z.string(),
@@ -46,13 +46,18 @@ export async function getAllTrainnings(app: FastifyInstance) {
         const formattedTrainnings = trainnings.map((trainning) => ({
           ...trainning,
           date: trainning.date.toISOString(),
-          imageUrl: trainning.imageUrl || undefined,
+          imageUrl: trainning.image || undefined,
           location: trainning.location || undefined,
           aboutHeader: trainning.aboutHeader || undefined,
           format: trainning.format as 'ONLINE' | 'IN_PERSON' | 'HYBRID',
         }))
 
-        return reply.send({ trainnings: formattedTrainnings })
+        return reply.send({
+          trainnings: formattedTrainnings.map((trainning) => ({
+            ...trainning,
+            image: trainning.image || undefined,
+          })),
+        })
       },
     )
 }

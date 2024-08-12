@@ -20,7 +20,7 @@ export async function createTrainning(app: FastifyInstance) {
           security: [{ bearerAuth: [] }],
           body: z.object({
             title: z.string(),
-            imageUrl: z.string().url(),
+            image: z.string().url(),
             format: z.enum(['ONLINE', 'IN_PERSON', 'HYBRID']),
             duration: z.string(),
             timeconclusion: z.string(),
@@ -58,7 +58,7 @@ export async function createTrainning(app: FastifyInstance) {
 
         const {
           title,
-          imageUrl,
+          image,
           format,
           duration,
           timeconclusion,
@@ -77,7 +77,7 @@ export async function createTrainning(app: FastifyInstance) {
         const trainning = await prisma.trainning.create({
           data: {
             title,
-            imageUrl,
+            image,
             format,
             duration,
             timeconclusion,

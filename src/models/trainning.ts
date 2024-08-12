@@ -2,7 +2,7 @@ import z from 'zod'
 
 export const trainningSchema = z.object({
   id: z.number(),
-  imageUrl: z.string().optional(),
+  image: z.string().optional(),
   format: z.string(),
   duration: z.string(),
   timeconclusion: z.string(),

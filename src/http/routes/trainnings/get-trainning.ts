@@ -26,7 +26,7 @@ export async function getTrainning(app: FastifyInstance) {
               trainning: z.object({
                 id: z.number(),
                 title: z.string(),
-                imageUrl: z.string().url().optional(),
+                image: z.string().url().optional(),
                 format: z.enum(['ONLINE', 'IN_PERSON', 'HYBRID']),
                 duration: z.string(),
                 timeconclusion: z.string(),
@@ -62,6 +62,7 @@ export async function getTrainning(app: FastifyInstance) {
         const trainning = await prisma.trainning.findUnique({
           select: {
             id: true,
+            image: true,
             title: true,
             format: true,
             duration: true,
@@ -95,7 +96,12 @@ export async function getTrainning(app: FastifyInstance) {
           format: trainning.format as 'ONLINE' | 'IN_PERSON' | 'HYBRID',
         }
 
-        return reply.send({ trainning: formattedTrainning })
+        return reply.send({
+          trainning: {
+            ...formattedTrainning,
+            image: formattedTrainning.image ?? undefined,
+          },
+        })
       },
     )
 }

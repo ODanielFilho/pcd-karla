@@ -23,7 +23,7 @@ export async function updateTrainning(app: FastifyInstance) {
           }),
           body: z.object({
             title: z.string(),
-            imageUrl: z.string().url().optional(),
+            image: z.string().url().optional(),
             format: z.enum(['ONLINE', 'IN_PERSON', 'HYBRID']),
             duration: z.string(),
             timeconclusion: z.string(),
@@ -88,7 +88,7 @@ export async function updateTrainning(app: FastifyInstance) {
 
         const {
           title,
-          imageUrl,
+          image,
           format,
           duration,
           timeconclusion,
@@ -110,7 +110,7 @@ export async function updateTrainning(app: FastifyInstance) {
           },
           data: {
             title,
-            imageUrl,
+            image,
             format,
             duration,
             timeconclusion,
@@ -141,7 +141,7 @@ export async function updateTrainning(app: FastifyInstance) {
           createdAt: formattedTrainning.createdAt,
           updatedAt: formattedTrainning.updatedAt,
           title: updatedTrainning.title,
-          imageUrl: updatedTrainning.imageUrl || undefined,
+          imageUrl: updatedTrainning.image || undefined,
           format: updatedTrainning.format as 'ONLINE' | 'IN_PERSON' | 'HYBRID',
           duration: updatedTrainning.duration,
           timeconclusion: updatedTrainning.timeconclusion,
