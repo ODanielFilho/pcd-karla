@@ -19,7 +19,7 @@ export async function deleteTrainning(app: FastifyInstance) {
           summary: 'delete trainning',
           security: [{ bearerAuth: [] }],
           params: z.object({
-            trainningId: z.number(),
+            trainningId: z.string(),
           }),
           response: {
             204: z.null(),
@@ -57,11 +57,11 @@ export async function deleteTrainning(app: FastifyInstance) {
             teacherId: true,
           },
           where: {
-            id: trainningId,
+            id: parseInt(trainningId),
           },
         })
 
-        if (!trainningId) {
+        if (!trainning) {
           throw new BadRequestError('trainning not found.')
         }
 
