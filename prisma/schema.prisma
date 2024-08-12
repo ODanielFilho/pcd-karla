@@ -30,14 +30,36 @@ model User {
   @@map("users")
 }
 
+model CompanyResume {
+  id          Int            @id @default(autoincrement())
+  title       String
+  description String
+  companyId   Int
+  company     CompanyProfile @relation(fields: [companyId], references: [id])
+
+  @@map("company_resume")
+}
+
+model CompanyProfile {
+  id        Int    @id @default(autoincrement())
+  title     String
+  location  String
+  linkedin  String
+  instagram String
+  site      String
+
+  CompanyResume CompanyResume[]
+}
+
 model Job {
   id           Int           @id @default(autoincrement())
   title        String
   description  String
-  pay          Int
+  pay          Float
   location     String
   benefits     String
   companyId    String
+  resume       String[]
   createdAt    DateTime      @default(now()) @map("created_at")
   updatedAt    DateTime      @updatedAt @map("updated_at")
   slug         String        @unique
@@ -70,9 +92,8 @@ model Token {
   id        String    @id @default(uuid())
   type      TokenType
   createdAt DateTime  @default(now()) @map("created_at")
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, name: "UserTokens")
-  userId String @map("user_id")
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade, name: "UserTokens")
+  userId    String    @map("user_id")
 
   @@map("tokens")
 }

@@ -19,7 +19,7 @@ export async function deleteJob(app: FastifyInstance) {
           summary: 'Delete a job',
           security: [{ bearerAuth: [] }],
           params: z.object({
-            jobId: z.string().uuid(),
+            jobId: z.number().int(),
           }),
           response: {
             204: z.null(),

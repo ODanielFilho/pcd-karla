@@ -22,10 +22,14 @@ export async function createJob(app: FastifyInstance) {
           body: z.object({
             title: z.string(),
             description: z.string(),
+            pay: z.number(),
+            location: z.string(),
+            benefits: z.string(),
+            resume: z.array(z.string()),
           }),
           response: {
             201: z.object({
-              jobId: z.string().uuid(),
+              jobId: z.number().int(),
             }),
           },
         },
@@ -41,7 +45,8 @@ export async function createJob(app: FastifyInstance) {
           throw new UnauthorizedError("You're not allowed to create new jobs.")
         }
 
-        const { title, description } = request.body
+        const { title, description, benefits, location, pay, resume } =
+          request.body
 
         const job = await prisma.job.create({
           data: {
@@ -49,6 +54,10 @@ export async function createJob(app: FastifyInstance) {
             slug: createSlug(title),
             description,
             companyId: userId,
+            benefits,
+            location,
+            pay,
+            resume,
           },
         })
 

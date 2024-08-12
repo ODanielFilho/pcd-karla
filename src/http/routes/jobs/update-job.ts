@@ -23,12 +23,20 @@ export async function updateJob(app: FastifyInstance) {
           body: z.object({
             title: z.string().optional(),
             description: z.string().optional(),
+            pay: z.number().optional(),
+            location: z.string().optional(),
+            benefits: z.string().optional(),
+            resume: z.array(z.string()).optional(),
           }),
           response: {
             200: z.object({
-              id: z.string().uuid(),
+              id: z.number().int(),
               title: z.string(),
               description: z.string(),
+              pay: z.number(),
+              location: z.string(),
+              benefits: z.string(),
+              resume: z.array(z.string()),
               createdAt: z.string().datetime(),
               updatedAt: z.string().datetime(),
               companyId: z.string().uuid(),
@@ -41,7 +49,7 @@ export async function updateJob(app: FastifyInstance) {
       },
       async (request, reply) => {
         const { jobId } = request.params
-        const { title, description } = request.body
+        const { title, description, benefits, location, pay } = request.body
         const userId = await request.getCurrentUserId()
         const userRole = await request.getUserRole()
 
@@ -51,8 +59,9 @@ export async function updateJob(app: FastifyInstance) {
           throw new UnauthorizedError(`You're not allowed to update jobs.`)
         }
 
+        const id = parseInt(jobId, 10)
         const job = await prisma.job.findUnique({
-          where: { id: jobId },
+          where: { id },
         })
 
         if (!job) {
@@ -64,10 +73,13 @@ export async function updateJob(app: FastifyInstance) {
         }
 
         const updatedJob = await prisma.job.update({
-          where: { id: jobId },
+          where: { id },
           data: {
             title: title || job.title,
             description: description || job.description,
+            benefits: benefits || job.benefits,
+            pay: pay || job.pay,
+            location: location || job.location,
           },
         })
 

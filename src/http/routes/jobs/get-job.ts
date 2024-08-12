@@ -24,12 +24,15 @@ export async function getJob(app: FastifyInstance) {
           response: {
             200: z.object({
               job: z.object({
-                id: z.string().uuid(),
+                id: z.number().int(),
                 title: z.string(),
                 description: z.string(),
+                pay: z.number(),
+                location: z.string(),
+                benefits: z.string(),
+                resume: z.array(z.string()),
                 companyId: z.string().uuid(),
                 company: z.object({
-                  id: z.string().uuid(),
                   name: z.string().nullable(),
                   avatarUrl: z.string().url().nullable(),
                 }),
@@ -54,6 +57,10 @@ export async function getJob(app: FastifyInstance) {
             id: true,
             title: true,
             description: true,
+            benefits: true,
+            location: true,
+            pay: true,
+            resume: true,
             companyId: true,
             company: {
               select: {
@@ -64,7 +71,7 @@ export async function getJob(app: FastifyInstance) {
             },
           },
           where: {
-            id: jobId,
+            id: parseInt(jobId, 10),
           },
         })
 
