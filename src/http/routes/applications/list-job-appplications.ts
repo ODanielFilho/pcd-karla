@@ -18,7 +18,7 @@ export async function listJobApplications(app: FastifyInstance) {
           summary: 'List applications for a specific job',
           security: [{ bearerAuth: [] }],
           params: z.object({
-            jobId: z.string().uuid(),
+            jobId: z.number().int(),
           }),
           response: {
             200: z.object({

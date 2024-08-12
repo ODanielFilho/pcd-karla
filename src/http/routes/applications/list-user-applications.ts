@@ -20,7 +20,7 @@ export async function listUserApplications(app: FastifyInstance) {
             200: z.object({
               jobsByApplication: z.array(
                 z.object({
-                  id: z.string(),
+                  id: z.number().int(),
                   title: z.string(),
                   description: z.string(),
                   company: z.string(),

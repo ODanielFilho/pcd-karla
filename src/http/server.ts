@@ -25,6 +25,7 @@ import { getTrainningStudents } from './routes/classrooms/get-trainning-classroo
 import { getUserTrainings } from './routes/classrooms/get-user-trainnings'
 import { createJob } from './routes/jobs/create-job'
 import { deleteJob } from './routes/jobs/delete-job'
+import { getAllJobs } from './routes/jobs/get-all-jobs'
 import { getJob } from './routes/jobs/get-job'
 import { getJobs } from './routes/jobs/get-jobs'
 import { updateJob } from './routes/jobs/update-job'
@@ -99,6 +100,7 @@ app.register(resetPassword)
 app.register(createJob)
 app.register(getJob)
 app.register(getJobs)
+app.register(getAllJobs)
 app.register(updateJob)
 app.register(deleteJob)
 

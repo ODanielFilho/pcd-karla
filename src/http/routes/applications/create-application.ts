@@ -20,7 +20,7 @@ export async function createApplication(app: FastifyInstance) {
           security: [{ bearerAuth: [] }],
           body: z.object({
             userId: z.string(),
-            jobId: z.string(),
+            jobId: z.number().int(),
           }),
           response: {
             201: z.object({
