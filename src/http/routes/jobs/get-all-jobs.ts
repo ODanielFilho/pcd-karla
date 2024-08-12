@@ -12,7 +12,6 @@ export async function getAllJobs(app: FastifyInstance) {
       schema: {
         tags: ['Jobs'],
         summary: 'Get all jobs',
-        security: [{ bearerAuth: [] }],
         response: {
           200: z.object({
             jobs: z.array(
