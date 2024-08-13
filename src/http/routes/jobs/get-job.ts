@@ -19,7 +19,7 @@ export async function getJob(app: FastifyInstance) {
           summary: 'Get job details',
           security: [{ bearerAuth: [] }],
           params: z.object({
-            jobId: z.string().uuid(),
+            jobId: z.string(),
           }),
           response: {
             200: z.object({
