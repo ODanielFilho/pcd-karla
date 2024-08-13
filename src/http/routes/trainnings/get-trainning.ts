@@ -35,7 +35,6 @@ export async function getTrainning(app: FastifyInstance) {
               aboutHeader: z.string(),
               trail: z.array(z.string()),
               content: z.string(),
-              teacherId: z.string(),
               teacherName: z.string(), // Adicionar o nome do professor à resposta
             }),
           }),
