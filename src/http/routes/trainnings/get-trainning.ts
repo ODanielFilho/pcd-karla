@@ -12,9 +12,7 @@ export async function getTrainning(app: FastifyInstance) {
         tags: ['Trainnings'],
         summary: 'Get trainning details',
         params: z.object({
-          trainningId: z.string().refine((id) => !isNaN(Number(id)), {
-            message: 'trainningId must be a number',
-          }), // Validar que trainningId seja um número válido
+          trainningId: z.string(),
         }),
         response: {
           200: z.object({
