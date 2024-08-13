@@ -26,7 +26,15 @@ export async function updateJob(app: FastifyInstance) {
             pay: z.number().optional(),
             location: z.string().optional(),
             benefits: z.string().optional(),
-            resume: z.array(z.string()).optional(),
+            resume: z
+              .array(
+                z.object({
+                  id: z.number().optional(),
+                  title: z.string().optional(),
+                  description: z.string().optional(),
+                }),
+              )
+              .optional(),
           }),
           response: {
             200: z.object({
@@ -36,7 +44,13 @@ export async function updateJob(app: FastifyInstance) {
               pay: z.number(),
               location: z.string(),
               benefits: z.string(),
-              resume: z.array(z.string()),
+              resume: z.array(
+                z.object({
+                  id: z.number().int(),
+                  title: z.string(),
+                  description: z.string(),
+                }),
+              ),
               createdAt: z.string().datetime(),
               updatedAt: z.string().datetime(),
               companyId: z.string().uuid(),
@@ -49,7 +63,8 @@ export async function updateJob(app: FastifyInstance) {
       },
       async (request, reply) => {
         const { jobId } = request.params
-        const { title, description, benefits, location, pay } = request.body
+        const { title, description, benefits, location, pay, resume } =
+          request.body
         const userId = await request.getCurrentUserId()
         const userRole = await request.getUserRole()
 
@@ -62,6 +77,9 @@ export async function updateJob(app: FastifyInstance) {
         const id = parseInt(jobId, 10)
         const job = await prisma.job.findUnique({
           where: { id },
+          include: {
+            resume: true, // Include existing resumes for the job
+          },
         })
 
         if (!job) {
@@ -72,6 +90,31 @@ export async function updateJob(app: FastifyInstance) {
           throw new UnauthorizedError(`You're not allowed to update this job.`)
         }
 
+        // Update resumes if provided
+        if (resume) {
+          for (const resumeItem of resume) {
+            if (resumeItem.id) {
+              // Update existing resume
+              await prisma.jobResume.update({
+                where: { id: resumeItem.id },
+                data: {
+                  title: resumeItem.title || undefined,
+                  description: resumeItem.description || undefined,
+                },
+              })
+            } else {
+              // Create new resume
+              await prisma.jobResume.create({
+                data: {
+                  jobId: id,
+                  title: resumeItem.title!,
+                  description: resumeItem.description!,
+                },
+              })
+            }
+          }
+        }
+
         const updatedJob = await prisma.job.update({
           where: { id },
           data: {
@@ -80,6 +123,9 @@ export async function updateJob(app: FastifyInstance) {
             benefits: benefits || job.benefits,
             pay: pay || job.pay,
             location: location || job.location,
+          },
+          include: {
+            resume: true, // Include updated resumes in the response
           },
         })
 

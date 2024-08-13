@@ -3,7 +3,6 @@ import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { prisma } from '../../../lib/prisma'
-import { createSlug } from '../../../utils/create-slug'
 import { getUserPermissions } from '../../../utils/get-user-permissions'
 import { auth } from '../../middlewares/auth'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
@@ -25,7 +24,12 @@ export async function createJob(app: FastifyInstance) {
             pay: z.number(),
             location: z.string(),
             benefits: z.string(),
-            resume: z.array(z.string()),
+            resume: z.array(
+              z.object({
+                title: z.string(),
+                description: z.string(),
+              }),
+            ),
           }),
           response: {
             201: z.object({
@@ -41,7 +45,6 @@ export async function createJob(app: FastifyInstance) {
         const { cannot } = getUserPermissions(userId, userRole)
 
         if (cannot('create', 'Job')) {
-          // eslint-disable-next-line quotes
           throw new UnauthorizedError("You're not allowed to create new jobs.")
         }
 
@@ -51,13 +54,17 @@ export async function createJob(app: FastifyInstance) {
         const job = await prisma.job.create({
           data: {
             title,
-            slug: createSlug(title),
             description,
             companyId: userId,
             benefits,
             location,
             pay,
-            resume,
+            resume: {
+              create: resume.map((r) => ({
+                title: r.title,
+                description: r.description,
+              })),
+            },
           },
         })
 

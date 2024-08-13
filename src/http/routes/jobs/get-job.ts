@@ -12,7 +12,9 @@ export async function getJob(app: FastifyInstance) {
         tags: ['Jobs'],
         summary: 'Get job details',
         params: z.object({
-          jobId: z.string(),
+          jobId: z.string().refine((id) => !isNaN(Number(id)), {
+            message: 'jobId must be a number',
+          }),
         }),
         response: {
           200: z.object({
@@ -23,7 +25,13 @@ export async function getJob(app: FastifyInstance) {
               pay: z.number(),
               location: z.string(),
               benefits: z.string(),
-              resume: z.array(z.string()),
+              resume: z.array(
+                z.object({
+                  id: z.number().int(),
+                  title: z.string(),
+                  description: z.string(),
+                }),
+              ),
               companyId: z.string().uuid(),
               company: z.object({
                 name: z.string().nullable(),
@@ -36,6 +44,7 @@ export async function getJob(app: FastifyInstance) {
     },
     async (request, reply) => {
       const { jobId } = request.params
+
       const job = await prisma.job.findUnique({
         select: {
           id: true,
@@ -44,7 +53,13 @@ export async function getJob(app: FastifyInstance) {
           benefits: true,
           location: true,
           pay: true,
-          resume: true,
+          resume: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+            },
+          },
           companyId: true,
           company: {
             select: {

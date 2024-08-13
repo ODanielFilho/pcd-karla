@@ -11,6 +11,7 @@ import { permissions } from './permissions'
 import { applicationSubject } from './subjects/application'
 import { classroomSubject } from './subjects/classroom'
 import { jobSubject } from './subjects/job'
+import { jobResumeSubject } from './subjects/job-resume'
 import { lessonSubject } from './subjects/lesson'
 import { moduleSubject } from './subjects/module'
 import { newsSubject } from './subjects/news'
@@ -29,6 +30,7 @@ const appAbilitiesSchema = z.union([
   moduleSubject,
   lessonSubject,
   classroomSubject,
+  jobResumeSubject,
   z.tuple([z.literal('manage'), z.literal('all')]),
 ])
 

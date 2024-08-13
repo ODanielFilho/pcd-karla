@@ -20,7 +20,13 @@ export async function getAllJobs(app: FastifyInstance) {
                 pay: z.number(),
                 location: z.string(),
                 benefits: z.string(),
-                resume: z.array(z.string()),
+                resume: z.array(
+                  z.object({
+                    id: z.number().int(),
+                    title: z.string(),
+                    description: z.string(),
+                  }),
+                ),
                 createdAt: z.string().datetime(),
                 updatedAt: z.string().datetime(),
                 companyId: z.string().uuid(),
@@ -39,7 +45,8 @@ export async function getAllJobs(app: FastifyInstance) {
     async (request, reply) => {
       const jobs = await prisma.job.findMany({
         include: {
-          company: true, // Inclui as informações da empresa relacionada
+          company: true,
+          resume: true,
         },
       })
 

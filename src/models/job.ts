@@ -6,7 +6,12 @@ export const jobSchema = z.object({
   pay: z.number(),
   location: z.string(),
   benefits: z.string(),
-  resume: z.array(z.string()),
+  resume: z.array(
+    z.object({
+      title: z.string(),
+      description: z.string(),
+    }),
+  ),
   companyId: z.string(),
   __typename: z.literal('Job'),
 })

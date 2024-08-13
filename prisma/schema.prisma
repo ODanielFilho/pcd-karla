@@ -51,6 +51,15 @@ model CompanyProfile {
   CompanyResume CompanyResume[]
 }
 
+model JobResume {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  jobId       Int
+
+  Job Job @relation("JobResumes", fields: [jobId], references: [id], onDelete: Cascade)
+}
+
 model Job {
   id           Int           @id @default(autoincrement())
   title        String
@@ -59,10 +68,9 @@ model Job {
   location     String
   benefits     String
   companyId    String
-  resume       String[]
+  resume       JobResume[]   @relation("JobResumes")
   createdAt    DateTime      @default(now()) @map("created_at")
   updatedAt    DateTime      @updatedAt @map("updated_at")
-  slug         String        @unique
   company      User          @relation("CompanyJobs", fields: [companyId], references: [id], onDelete: Cascade)
   applications Application[]
 
