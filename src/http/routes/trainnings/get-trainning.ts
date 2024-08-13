@@ -12,25 +12,27 @@ export async function getTrainning(app: FastifyInstance) {
         tags: ['Trainnings'],
         summary: 'Get trainning details',
         params: z.object({
-          trainningId: z.string(),
+          trainningId: z.string().refine((id) => !isNaN(Number(id)), {
+            message: 'trainningId must be a number',
+          }), // Validar que trainningId seja um número válido
         }),
         response: {
           200: z.object({
             trainning: z.object({
               id: z.number(),
               title: z.string(),
-              image: z.string().url().optional(),
+              image: z.string().url().nullable(),
               format: z.enum(['ONLINE', 'IN_PERSON', 'HYBRID']),
               duration: z.string(),
               timeconclusion: z.string(),
               intended: z.string(),
               certificate: z.string(),
-              location: z.string().optional(),
+              location: z.string(),
               date: z.string().datetime(),
               teacherLink: z.string(),
               objective: z.string(),
               about: z.string(),
-              aboutHeader: z.string().optional(),
+              aboutHeader: z.string(),
               trail: z.array(z.string()),
               content: z.string(),
               teacherId: z.string(),
@@ -54,6 +56,8 @@ export async function getTrainning(app: FastifyInstance) {
           certificate: true,
           date: true,
           teacherLink: true,
+          aboutHeader: true,
+          location: true,
           objective: true,
           about: true,
           trail: true,
@@ -61,13 +65,9 @@ export async function getTrainning(app: FastifyInstance) {
           teacherId: true,
         },
         where: {
-          id: parseInt(trainningId),
+          id: parseInt(trainningId), // Verificamos se é um número válido
         },
       })
-
-      if (!trainning) {
-        throw new BadRequestError('trainning not found.')
-      }
 
       if (!trainning) {
         throw new BadRequestError('Trainning not found.')
@@ -76,13 +76,14 @@ export async function getTrainning(app: FastifyInstance) {
       const formattedTrainning = {
         ...trainning,
         date: trainning.date.toISOString(),
-        format: trainning.format as 'ONLINE' | 'IN_PERSON' | 'HYBRID',
+        image: trainning.image || '',
+        format: trainning.format as 'ONLINE' | 'IN_PERSON' | 'HYBRID', // Garantir o tipo correto
       }
 
       return reply.send({
         trainning: {
           ...formattedTrainning,
-          image: formattedTrainning.image ?? undefined,
+          aboutHeader: formattedTrainning.aboutHeader || '',
         },
       })
     },
