@@ -33,7 +33,6 @@ export async function getAllTrainnings(app: FastifyInstance) {
                   aboutHeader: z.string().optional(),
                   trail: z.array(z.string()),
                   content: z.string(),
-                  teacherId: z.string().uuid(),
                 }),
               ),
             }),

@@ -36,6 +36,7 @@ export async function getTrainning(app: FastifyInstance) {
               trail: z.array(z.string()),
               content: z.string(),
               teacherId: z.string(),
+              teacherName: z.string(), // Adicionar o nome do professor à resposta
             }),
           }),
         },
@@ -73,17 +74,31 @@ export async function getTrainning(app: FastifyInstance) {
         throw new BadRequestError('Trainning not found.')
       }
 
+      const teacher = await prisma.user.findUnique({
+        select: {
+          name: true,
+        },
+        where: {
+          id: trainning.teacherId, // Usar o teacherId do treinamento para buscar o nome do professor
+        },
+      })
+
+      if (!teacher) {
+        throw new BadRequestError('Teacher not found.')
+      }
+
       const formattedTrainning = {
         ...trainning,
         date: trainning.date.toISOString(),
         image: trainning.image || '',
         format: trainning.format as 'ONLINE' | 'IN_PERSON' | 'HYBRID', // Garantir o tipo correto
+        teacherName: teacher.name, // Adicionar o nome do professor à resposta
       }
-
       return reply.send({
         trainning: {
           ...formattedTrainning,
           aboutHeader: formattedTrainning.aboutHeader || '',
+          teacherName: formattedTrainning.teacherName || '',
         },
       })
     },
