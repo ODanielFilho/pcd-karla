@@ -19,6 +19,10 @@ export const permissions: Record<Role, PermissionsByRole> = {
     can('manage', 'Classroom')
   },
   COMPANY(user, { can }) {
+    can('manage', 'Trainning')
+    can('manage', 'Module')
+    can('manage', 'Lesson')
+    can('manage', 'Classroom')
     can('manage', 'JobResume')
     can('create', 'Job')
     can('get', 'Job', { companyId: { $eq: user.id } })
@@ -30,7 +34,17 @@ export const permissions: Record<Role, PermissionsByRole> = {
     can('get', 'Trainning')
   },
   CANDIDATE(user, { can }) {
+    can('create', 'Job')
+    can('get', 'Job', { companyId: { $eq: user.id } })
+    can('update', 'Job', { companyId: { $eq: user.id } })
+    can('delete', 'Job', { companyId: { $eq: user.id } })
+    can('read', 'Application', { jobId: { $in: user.companyJobIds } })
+    can('delete', 'Application', { jobId: { $in: user.companyJobIds } })
+    can('manage', 'Trainning', { teacherId: { $eq: user.id } })
     can('manage', 'Application', { userId: { $eq: user.id } })
+    can('manage', 'Module', { teacherId: { $eq: user.id } })
+    can('manage', 'Lesson', { teacherId: { $eq: user.id } })
+    can('manage', 'Classroom')
     can('get', 'Trainning')
     can('get', 'Job')
   },
