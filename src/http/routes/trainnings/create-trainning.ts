@@ -34,7 +34,6 @@ export async function createTrainning(app: FastifyInstance) {
             aboutHeader: z.string(),
             trail: z.array(z.string()),
             content: z.string(),
-            teacherId: z.string(),
           }),
           response: {
             201: z.object({
