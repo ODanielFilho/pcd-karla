@@ -19,6 +19,10 @@ export async function authenticateWithPassword(app: FastifyInstance) {
         response: {
           201: z.object({
             token: z.string(),
+            user: z.object({
+              name: z.string(),
+              role: z.enum(['CANDIDATE', 'COMPANY', 'ADMIN', 'MEDIA']),
+            }),
           }),
         },
       },
@@ -42,6 +46,10 @@ export async function authenticateWithPassword(app: FastifyInstance) {
         )
       }
 
+      if (userFromEmail.name === null) {
+        throw new BadRequestError('user not found')
+      }
+
       const isPasswordValid = await compare(
         password,
         userFromEmail.passwordHash,
@@ -61,7 +69,13 @@ export async function authenticateWithPassword(app: FastifyInstance) {
         },
       )
 
-      return reply.status(201).send({ token })
+      return reply.status(201).send({
+        token,
+        user: {
+          name: userFromEmail.name,
+          role: userFromEmail.role,
+        },
+      })
     },
   )
 }
