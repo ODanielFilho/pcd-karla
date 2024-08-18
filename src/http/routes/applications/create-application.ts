@@ -19,7 +19,6 @@ export async function createApplication(app: FastifyInstance) {
           summary: 'Create a new application',
           security: [{ bearerAuth: [] }],
           body: z.object({
-            userId: z.string(),
             jobId: z.number().int(),
           }),
           response: {
@@ -31,9 +30,10 @@ export async function createApplication(app: FastifyInstance) {
       },
 
       async (request, reply) => {
+        const userId = await request.getCurrentUserId()
         const userRole: UserRole = await request.getUserRole()
 
-        const { userId, jobId } = request.body
+        const { jobId } = request.body
         const { cannot } = getUserPermissions(userId, userRole)
         if (cannot('manage', 'Application')) {
           throw new UnauthorizedError(

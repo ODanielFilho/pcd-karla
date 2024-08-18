@@ -20,8 +20,7 @@ export async function createClassroom(app: FastifyInstance) {
           summary: 'Create a new classroom',
           security: [{ bearerAuth: [] }],
           body: z.object({
-            userId: z.string(),
-            trainningId: z.string(),
+            trainningId: z.number(),
           }),
           response: {
             201: z.object({
@@ -32,10 +31,10 @@ export async function createClassroom(app: FastifyInstance) {
       },
 
       async (request, reply) => {
+        const userId = await request.getCurrentUserId()
         const userRole: UserRole = await request.getUserRole()
-
-        const { userId, trainningId } = request.body
         const { cannot } = getUserPermissions(userId, userRole)
+        const { trainningId } = request.body
         if (cannot('manage', 'Classroom')) {
           throw new UnauthorizedError(
             'You are not allowed to create new classrooms.',

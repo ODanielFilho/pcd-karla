@@ -20,6 +20,7 @@ export async function authenticateWithPassword(app: FastifyInstance) {
           201: z.object({
             token: z.string(),
             user: z.object({
+              id: z.string().uuid(),
               name: z.string(),
               role: z.enum(['CANDIDATE', 'COMPANY', 'ADMIN', 'MEDIA']),
             }),
@@ -72,6 +73,7 @@ export async function authenticateWithPassword(app: FastifyInstance) {
       return reply.status(201).send({
         token,
         user: {
+          id: userFromEmail.id,
           name: userFromEmail.name,
           role: userFromEmail.role,
         },
